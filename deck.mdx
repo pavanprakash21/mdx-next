@@ -2,96 +2,605 @@ import {
   CodeSurferLayout,
   CodeSurferColumnLayout,
 } from "code-surfer";
-export { githubFull as theme } from "code-surfer";
+import { Head, Notes } from 'mdx-deck';
+import { Invert } from 'mdx-deck/layouts';
 
-# Hello 👋
+export { future as theme } from 'mdx-deck/themes';
 
-You are using [MDX Deck](https://github.com/jxnblk/mdx-deck) and [Code Surfer](https://github.com/pomber/code-surfer)
+<Head>
+  <title>An introduction to Next.js</title>
+</Head>
+
+<Invert>
+  <h2>Next.js - An introduction</h2>
+</Invert>
+
+<Notes>
+  1. Self intro - name, position <br/>
+  2. Team intro - what do we do <br/>
+  3. Reason to choose the topic - migration
+</Notes>
+
+---
+
+## Why React?
+
+1. Reusable Components
+2. Cleaner Abstraction
+3. Virtual DOM
+4. Flux and Redux (hooks and effects)
+5. No particular conventions -> Dynamic Ecosystem
+
+<Notes>
+  1. Button/Navbar on one page can be used in multiple other places. Just call the function/component instance where you want<br/>
+  2. You can easily picture the entire webpage in your head<br/>
+  3. In memory copy of real dom - efficient diff algos - batch updates - no dirt checking ala angular (observables)<br/>
+  4. State Management<br/>
+  5. no convention leads to lots of uncertainties. what styling? what state management?
+</Notes>
+
+---
+
+### Major Options
+
+1. Write everything from scratch
+2. Create-React-App
+3. Next.js
+
+<Notes>
+  1. Just drop react and react-dom to your project. Setup everything including babel, webpack, styling, state management etc <br/>
+  2. By Facebook itself. No easy SSR. Will get back to advantages of SSR later. Difficult to customize.
+  3. Framework. Brings some conventions. Ability to customize to the core.
+</Notes>
+
+---
+
+# Why Next?
+
+---
+
+1. Hot Module Reloading
+2. Automatic Routing
+3. Single File Components (styled-jsx)
+4. Server Rendering
+5. Ecosystem Compatibility
+6. Automatic Code Splitting
+7. Prefetching
+8. Dynamic Components
+9. Static Exports
+
+<Notes>
+But first let's talk how easy it is to create a next.js application
+</Notes>
 
 ---
 
 <CodeSurferLayout>
 
-```js title="This is a title"
-function hello(name) {
-  console.log("hello " + name);
-}
+```Add it by using```
 
-hello("world");
-```
-
-```js 1:3 subtitle="This is a subtitle"
-function hello(name) {
-  console.log("hello " + name);
-}
-
-hello("world");
-```
-
-```js subtitle="New code is highlighted by default"
-function helloFactory() {
-  return name => {
-    console.log("hello " + name);
-  };
-}
-
-function hello(name) {
-  console.log("hello " + name);
-}
-
-hello("world");
-```
-
-```js subtitle="Adding more code so I can show you how the zoom works"
-function helloFactoryBuilder() {
-  return () => () => name => {
-    console.log("hello " + name);
-  };
-}
-
-function helloBuilder() {
-  return name => {
-    console.log("hello " + name);
-  };
-}
-
-function helloFactory() {
-  return name => {
-    console.log("hello " + name);
-  };
-}
-
-function hello(name) {
-  console.log("hello " + name);
-}
-
-hello("world");
-```
-
-```js 1:23
-function helloFactoryBuilder() {
-  return () => () => name => {
-    console.log("hello " + name);
-  };
-}
-
-function helloBuilder() {
-  return name => {
-    console.log("hello " + name);
-  };
-}
-
-function helloFactory() {
-  return name => {
-    console.log("hello " + name);
-  };
-}
-
-function hello(name) {
-  console.log("hello " + name);
-}
-
-hello("world");
+```js
+yarn init -y
+yarn add next react react-dom
 ```
 
 </CodeSurferLayout>
+
+<Notes>
+  1. Run this to create an empty project. The project contains only the package.json file with some values prefilled.<br/>
+  2. Install react and next using this command <br/>
+  3. react-dom is needed to access and modify the DOM. Fun fact, react doesn't provide render function but react-dom does.<br/>
+</Notes>
+
+---
+
+Add the scripts to your package.json
+
+---
+
+<CodeSurferLayout>
+
+```js
+"scripts": {
+  "dev": "next",
+  "build": "next build",
+  "start": "next start"
+}
+```
+
+</CodeSurferLayout>
+
+<Notes>
+  1. If you run the server now, console will complain of not having pages directory <br/>
+</Notes>
+
+---
+
+So, let's create a pages directory
+
+---
+
+<CodeSurferLayout>
+
+```mkdir pages```
+
+</CodeSurferLayout>
+
+<Notes>
+  1. That is all the constraints you have to run a Next App <br/>
+  2. Now if you go the localhost, it will throw a 404 - shows both HMR and automatic routing <br/>
+  3. Next is to demonstrate HMR with some cool features like error handling, component class instance and styled-jsx
+</Notes>
+
+---
+
+<CodeSurferLayout>
+
+```vim pages/index.js```
+
+```js
+export default () => (
+  <p>Hello Brillio</p>
+)
+```
+
+```js
+function hello() {
+  return <p>Hello Brillio</p>;
+};
+
+export default hello;
+```
+
+<Notes>
+  1. Only constraint is to export a function or an instance of a component class
+  2. Talk about jsx syntax
+</Notes>
+
+</CodeSurferLayout>
+
+---
+
+### Hot Module Reloading
+
+---
+
+<CodeSurferLayout>
+
+```js
+export default () => (
+  <>
+    <h1>Hello Brillio</h1>
+  </>
+)
+```
+
+```js
+export default () => (
+  <div>
+    <h1>Hello Brillio</p>
+  </div>
+)
+```
+
+```js
+undefined();
+```
+
+</CodeSurferLayout>
+
+<Notes>
+  1. Instant Page Refresh <br/> 
+  2. Easy recovery from errors <br/>
+  3. Change p tag to h1 tag <br/>
+  4. Make a syntax error <br/>
+  5. export undefined(); <br/>
+</Notes>
+
+---
+
+### Automatic Routing
+
+<Notes>
+  Before continuing, go to /about and show 404
+</Notes>
+
+---
+
+<CodeSurferLayout>
+
+```js
+touch pages/about.js
+```
+
+```js
+export default () => (
+  <p>about page</p>
+)
+```
+
+</CodeSurferLayout>
+
+<Notes>
+  1. Show navigation by going back and forth in the browser <br/>
+  2. Allows overriding easily by mapping a route <br/>
+  3. These are top level components <br/>
+  4. Entry points for code splitting which we talk about later
+</Notes>
+
+---
+
+### Styled JSX
+
+---
+
+<CodeSurferLayout>
+
+```js
+export default () => (
+  <div>
+    <h1>Hello Brillio</h1>
+  </div>
+)
+```
+
+```js
+export default () => (
+  <div>
+    <marquee>
+      <h1>Hello Brillio</h1>
+    </marquee>
+  </div>
+
+  <style jsx> {`
+    div {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+  `}
+  </style>
+)
+```
+
+```js
+export default () => (
+  <div>
+    <marquee>
+      <h1>Hello Brillio</h1>
+    </marquee>
+  </div>
+
+  <style jsx> {`
+    body {
+      background: pink;
+      color: white;
+      font-family: 'Comic Sans MS';
+    }
+
+    div {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+  `}
+  </style>
+)
+```
+
+```js
+export default () => (
+  <div>
+    <marquee>
+      <h1>Hello Brillio</h1>
+    </marquee>
+  </div>
+
+  <style jsx> {`
+    :global(body) {
+      background: pink;
+      color: white;
+      font-family: 'Comic Sans MS';
+    }
+
+    div {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+  `}
+  </style>
+)
+```
+
+
+```js
+import { Component } from react;
+
+export default () => (
+  <div>
+    <marquee>
+      <h1>Hello Brillio</h1>
+    </marquee>
+  </div>
+
+  <style jsx> {`
+    :global(body) {
+      background: pink;
+      color: white;
+      font-family: 'Comic Sans MS';
+    }
+
+    div {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+  `}
+  </style>
+)
+```
+
+```js
+import { Component } from react;
+
+export default () => (
+  <div>
+    <marquee>
+      <h1>Hello Brillio</h1>
+    </marquee>
+  </div>
+
+  <style jsx> {`
+    :global(body) {
+      background: pink;
+      color: white;
+      font-family: 'Comic Sans MS';
+    }
+
+    div {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+  `}
+  </style>
+)
+
+class Title extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
+  render() {
+    return (
+      <main>
+        <marquee>
+          <h1>Hello Brillio</h1>
+        </marquee>
+      </main>
+    )
+  }
+}
+```
+
+```js
+import { Component } from react;
+
+export default () => (
+  <div>
+    <Title />
+  </div>
+
+  <style jsx> {`
+    :global(body) {
+      background: pink;
+      color: white;
+      font-family: 'Comic Sans MS';
+    }
+
+    div {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+  `}
+  </style>
+)
+
+class Title extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
+  render() {
+    return (
+      <main>
+        <marquee>
+          <h1>Hello Brillio</h1>
+        </marquee>
+      </main>
+    )
+  }
+}
+```
+
+```js
+import { Component } from react;
+
+export default () => (
+  <div>
+    <Title />
+  </div>
+
+  <style jsx> {`
+    :global(body) {
+      background: pink;
+      color: white;
+      font-family: 'Comic Sans MS';
+    }
+
+    div {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+  `}
+  </style>
+)
+
+class Title extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
+  render() {
+    return (
+      <main>
+        <marquee>
+          <h1>Hello Brillio</h1>
+        </marquee>
+
+        <style jsx> {`
+          main {
+            width: 100vw;
+          }
+        `}</style>
+      </main>
+    )
+  }
+}
+```
+
+```js
+import { Component } from react;
+
+export default () => (
+  <div>
+    <Title />
+  </div>
+
+  <style jsx> {`
+    :global(body) {
+      background: pink;
+      color: white;
+      font-family: 'Comic Sans MS';
+    }
+
+    div {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    main {
+      color: green;
+    }
+  `}
+  </style>
+)
+
+class Title extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
+  render() {
+    return (
+      <main>
+        <marquee>
+          <h1>Hello Brillio</h1>
+        </marquee>
+
+        <style jsx> {`
+          main {
+            width: 100vw;
+          }
+        `}</style>
+      </main>
+    )
+  }
+}
+```
+
+```js
+import { Component } from react;
+
+export default () => (
+  <div>
+    <Title />
+  </div>
+
+  <style jsx> {`
+    :global(body) {
+      background: pink;
+      color: white;
+      font-family: 'Comic Sans MS';
+    }
+
+    div {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    main {
+      color: green;
+    }
+  `}
+  </style>
+)
+
+class Title extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
+  render() {
+    return (
+      <main>
+        <marquee>
+          <h1>Hello Brillio</h1>
+        </marquee>
+
+        <style jsx> {`
+          main {
+            width: 100vw;
+            color: green;
+          }
+        `}</style>
+      </main>
+    )
+  }
+}
+```
+
+
+</CodeSurferLayout>
+
+<Notes>
+  1. Center the content using flex <br/>
+  2. Talk about css' weird behaviour of global scopes <br/>
+  3. Inspect element and show how next does scoping <br/>
+  4. Talk about global scoping in next with body tag not working and adding the syntax
+</Notes>
+
+---
+
+### Server side Rendering
+
+---
