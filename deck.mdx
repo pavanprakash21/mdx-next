@@ -170,6 +170,7 @@ export default hello;
 ```js
 export default () => (
   <div>
+    // Changing the tags and saving automatically reflects on the browser
     <h1>Hello Brillio</h1>
   </div>
 )
@@ -178,6 +179,8 @@ export default () => (
 ```js
 export default () => (
   <div>
+    // Making a syntax error, results in complete error unlike HTML
+    // which results in weird behaviour
     <h1>Hello Brillio</p>
   </div>
 )
@@ -186,12 +189,14 @@ export default () => (
 ```js
 export default () => (
   <div>
+    // Let's fix it up
     <h1>Hello Brillio</h1>
   </div>
 )
 ```
 
 ```js
+// It's not just HTML errors, but js errors are also taken care of
 undefined();
 export default () => (
   <div>
@@ -265,6 +270,7 @@ export default () => (
     </marquee>
   </div>
 
+  // Let's add some styling to the page
   <style jsx> {`
     div {
       display: flex;
@@ -285,6 +291,8 @@ export default () => (
     </marquee>
   </div>
 
+  // Since the scope of body doesn't belong to this function,
+  // this won't work
   <style jsx> {`
     body {
       background: pink;
@@ -311,6 +319,7 @@ export default () => (
     </marquee>
   </div>
 
+  // But you can use the scope identifier to fix it
   <style jsx> {`
     :global(body) {
       background: pink;
@@ -331,6 +340,7 @@ export default () => (
 
 
 ```js
+// Let's modularize our title to show more options
 import { Component } from react;
 
 export default () => (
@@ -385,6 +395,7 @@ export default () => (
   </style>
 )
 
+// This is what our component class looks like
 class Title extends Component {
   constructor(props) {
     super(props);
@@ -408,6 +419,7 @@ import { Component } from react;
 
 export default () => (
   <div>
+    // Replace the tree with the component instance
     <Title />
   </div>
 
@@ -469,6 +481,61 @@ export default () => (
     }
   `}
   </style>
+)
+
+class Title extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
+  render() {
+    return (
+      <main>
+        <marquee>
+          <h1>Hello Brillio</h1>
+        </marquee>
+
+        // You can scope the main tag within this component
+        <style jsx> {`
+          main {
+            width: 100vw;
+          }
+        `}</style>
+      </main>
+    )
+  }
+}
+```
+
+```js
+import { Component } from react;
+
+export default () => (
+  <div>
+    <Title />
+  </div>
+
+  <style jsx> {`
+    :global(body) {
+      background: pink;
+      color: white;
+      font-family: 'Comic Sans MS';
+    }
+
+    div {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    main {
+      color: green;
+    }
+  `}
+  </style>
+  // This won't work since main is not in the scope of this function
 )
 
 class Title extends Component {
@@ -537,59 +604,7 @@ class Title extends Component {
           <h1>Hello Brillio</h1>
         </marquee>
 
-        <style jsx> {`
-          main {
-            width: 100vw;
-          }
-        `}</style>
-      </main>
-    )
-  }
-}
-```
-
-```js
-import { Component } from react;
-
-export default () => (
-  <div>
-    <Title />
-  </div>
-
-  <style jsx> {`
-    :global(body) {
-      background: pink;
-      color: white;
-      font-family: 'Comic Sans MS';
-    }
-
-    div {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-    }
-
-    main {
-      color: green;
-    }
-  `}
-  </style>
-)
-
-class Title extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
-  render() {
-    return (
-      <main>
-        <marquee>
-          <h1>Hello Brillio</h1>
-        </marquee>
-
+        // But this works
         <style jsx> {`
           main {
             width: 100vw;
