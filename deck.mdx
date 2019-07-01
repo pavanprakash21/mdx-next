@@ -75,9 +75,11 @@ But first let's talk how easy it is to create a next.js application
 
 ---
 
-<CodeSurferLayout>
+### Installation Steps
 
-```Add it by using```
+---
+
+<CodeSurferLayout>
 
 ```js
 yarn init -y
@@ -630,5 +632,146 @@ class Title extends Component {
 ---
 
 ### Server side Rendering
+
+---
+
+#### SSR
+
+Technique used to improve the perceived page load times
+
+---
+
+In a non-SSR scenario
+
+---
+
+<CodeSurferLayout>
+
+```Browser sends a request to a URL```
+
+```Browser receives the index.html as a response```
+
+```Browser then sends requests to download any remote links or remote scripts```
+
+```The browser waits till the scripts are downloaded```
+
+```
+The react library renders the component passed to it and finally mounts
+the component to the specified DOM element
+```
+
+```js
+  // All dependencies have to be loaded before the below
+  // code executes.
+  const renderApp = () => render(
+      <App />,
+      document.querySelector("#app")
+  );
+```
+
+```
+Until the above piece of code executes,
+the user basically just sees a blank screen
+```
+
+</CodeSurferLayout>
+
+---
+
+In a SSR scenario
+
+---
+
+<CodeSurferLayout>
+
+```Browser sends a request to the URL```
+
+```A node server responds by rendering the corresponding component into a string```
+
+```js
+  // code on the server that renders the App to string
+  // renderToString is a function imported from 'react-dom/server'
+
+  export const renderApp = (html, req, res) => {
+    let appString = renderToString(<App />);
+    let renderedApp = html.replace("<!--ssr-->", appString);
+    res.status(200).send(renderedApp);
+  };
+```
+
+```The rendered component is injected into index.html```
+
+```The index.html is sent back to the browser```
+
+```The browser renders the index.html and downloads all the other dependencies```
+
+```Once all the scripts are loaded, the react component is rendered again on the client```
+
+</CodeSurferLayout>
+
+---
+
+### Ecosystem Compatibility
+
+---
+
+<CodeSurferLayout>
+
+```js
+import { Component } from react;
+
+export default () => (
+  <div>
+    <Title />
+  </div>
+
+  <style jsx> {`
+    :global(body) {
+      background: pink;
+      color: white;
+      font-family: 'Comic Sans MS';
+    }
+
+    div {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    main {
+      color: green;
+    }
+  `}
+  </style>
+)
+
+class Title extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
+  render() {
+    return (
+      <main>
+        <marquee>
+          <h1>Hello Brillio</h1>
+        </marquee>
+
+        <style jsx> {`
+          main {
+            width: 100vw;
+            color: green;
+          }
+        `}</style>
+      </main>
+    )
+  }
+}
+```
+
+</CodeSurferLayout>
+
 
 ---
