@@ -738,9 +738,57 @@ export default () => (
       justify-content: center;
       height: 100vh;
     }
+  `}
+  </style>
+)
 
-    main {
-      color: green;
+class Title extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
+  render() {
+    return (
+      <main>
+        <marquee>
+          <h1>Hello Brillio</h1>
+        </marquee>
+
+        <style jsx> {`
+          main {
+            width: 100vw;
+            color: green;
+          }
+        `}</style>
+      </main>
+    )
+  }
+}
+```
+
+```js
+// Let's bring in isomorphic fetch
+import 'isomorphic-fetch';
+import { Component } from react;
+
+export default () => (
+  <div>
+    <Title />
+  </div>
+
+  <style jsx> {`
+    :global(body) {
+      background: pink;
+      color: white;
+      font-family: 'Comic Sans MS';
+    }
+
+    div {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
     }
   `}
   </style>
@@ -771,7 +819,316 @@ class Title extends Component {
 }
 ```
 
+```js
+// Let's bring in isomorphic fetch
+import 'isomorphic-fetch';
+import { Component } from react;
+
+// Let's convert our function to a class
+export default class extends Component {
+  <div>
+    <Title />
+  </div>
+
+  <style jsx> {`
+    :global(body) {
+      background: pink;
+      color: white;
+      font-family: 'Comic Sans MS';
+    }
+
+    div {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+  `}
+  </style>
+}
+
+class Title extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
+  render() {
+    return (
+      <main>
+        <marquee>
+          <h1>Hello Brillio</h1>
+        </marquee>
+
+        <style jsx> {`
+          main {
+            width: 100vw;
+            color: green;
+          }
+        `}</style>
+      </main>
+    )
+  }
+}
+```
+
+```js
+// Let's bring in isomorphic fetch
+import 'isomorphic-fetch';
+import { Component } from react;
+
+export default class extends Component {
+  render () {
+    return (
+      <div>
+        <Title />
+      </div>
+
+      <style jsx> {`
+        :global(body) {
+          background: pink;
+          color: white;
+          font-family: 'Comic Sans MS';
+        }
+
+        div {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          height: 100vh;
+        }
+      `}
+      </style>
+    )
+  }
+}
+
+class Title extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
+  render() {
+    return (
+      <main>
+        <marquee>
+          <h1>Hello Brillio</h1>
+        </marquee>
+
+        <style jsx> {`
+          main {
+            width: 100vw;
+            color: green;
+          }
+        `}</style>
+      </main>
+    )
+  }
+}
+```
+
+```js
+// Let's bring in isomorphic fetch
+import 'isomorphic-fetch';
+import { Component } from react;
+
+export default class extends Component {
+  // Let's add our constructor
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
+  render () {
+    return (
+      <div>
+        <Title />
+      </div>
+
+      <style jsx> {`
+        :global(body) {
+          background: pink;
+          color: white;
+          font-family: 'Comic Sans MS';
+        }
+
+        div {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          height: 100vh;
+        }
+      `}
+      </style>
+    )
+  }
+}
+
+class Title extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
+  render() {
+    return (
+      <main>
+        <marquee>
+          <h1>Hello Brillio</h1>
+        </marquee>
+
+        <style jsx> {`
+          main {
+            width: 100vw;
+            color: green;
+          }
+        `}</style>
+      </main>
+    )
+  }
+}
+```
+
+```js
+// Let's bring in isomorphic fetch
+import 'isomorphic-fetch';
+import { Component } from react;
+
+export default class extends Component {
+  // Let's add getInitialProps to fetch the API
+
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
+  render () {
+    return (
+      <div>
+        <Title />
+      </div>
+
+      <style jsx> {`
+        :global(body) {
+          background: pink;
+          color: white;
+          font-family: 'Comic Sans MS';
+        }
+
+        div {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          height: 100vh;
+        }
+      `}
+      </style>
+    )
+  }
+}
+
+class Title extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
+  render() {
+    return (
+      <main>
+        <marquee>
+          <h1>Hello Brillio</h1>
+        </marquee>
+
+        <style jsx> {`
+          main {
+            width: 100vw;
+            color: green;
+          }
+        `}</style>
+      </main>
+    )
+  }
+}
+```
+
+```js
+// Let's bring in isomorphic fetch
+import 'isomorphic-fetch';
+import { Component } from react;
+
+export default class extends Component {
+  // Now this works both on the client and the server
+  static async getInitialProps() {
+    const req = await fetch('someApi');
+    if (req.ok) {
+      const res = await req.json();
+      return { res }
+    } else {
+      return { res: [] }
+    }
+  }
+
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
+  render () {
+    return (
+      <div>
+        <Title />
+      </div>
+
+      <style jsx> {`
+        :global(body) {
+          background: pink;
+          color: white;
+          font-family: 'Comic Sans MS';
+        }
+
+        div {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          height: 100vh;
+        }
+      `}
+      </style>
+    )
+  }
+}
+
+class Title extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
+  render() {
+    return (
+      <main>
+        <marquee>
+          <h1>Hello Brillio</h1>
+        </marquee>
+
+        <style jsx> {`
+          main {
+            width: 100vw;
+            color: green;
+          }
+        `}</style>
+      </main>
+    )
+  }
+}
+```
+
 </CodeSurferLayout>
 
+---
+
+### Automatic Code Splitting
 
 ---
