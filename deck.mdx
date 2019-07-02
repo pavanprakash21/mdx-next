@@ -2,7 +2,12 @@ import {
   CodeSurferLayout,
   CodeSurferColumnLayout,
 } from "code-surfer";
-import { Head, Notes } from 'mdx-deck';
+import {
+  Head,
+  Notes } from 'mdx-deck';
+import {
+  Image,
+} from '@mdx-deck/components'
 import { Invert } from 'mdx-deck/layouts';
 
 export { future as theme } from 'mdx-deck/themes';
@@ -66,7 +71,7 @@ export { future as theme } from 'mdx-deck/themes';
 5. Ecosystem Compatibility
 6. Automatic Code Splitting
 7. Prefetching
-8. Dynamic Components
+8. Dynamic Pages
 9. Static Exports
 
 <Notes>
@@ -1130,5 +1135,202 @@ class Title extends Component {
 ---
 
 ### Automatic Code Splitting
+
+---
+
+Dynamically loading code, so that users only download the code they need for the part of the site that they're viewing
+
+---
+
+#### Improves
+
+1. Performance
+2. Impact on memory -> Battery usage on mobile devices
+3. Downloaded size
+
+<Notes>
+  1. Show the page source
+</Notes>
+
+---
+
+#### How about?
+
+---
+
+<CodeSurferLayout>
+
+```js
+// home.js
+import css from 'styled-jsx/css'
+
+//// about.js
+import css from 'styled-jsx/css'
+```
+
+</CodeSurferLayout>
+
+---
+
+Webpack/Next is smart enough to include it in common bundle
+
+---
+
+### Prefetching
+
+The Next.js router allows you to prefetch pages for faster navigation
+
+---
+
+<CodeSurferLayout>
+
+```js
+import Link from 'next/link'
+
+export default function IndexPage() {
+  return (
+    <>
+      <Link href="/about" prefetch>
+        <a>To About Page</a>
+      </Link>
+    </>
+  )
+}
+```
+
+</CodeSurferLayout>
+
+---
+
+Prefetching the Javascript bundle of every link that has a prefetch attribute
+
+Uses `<link rel="preload">` instead of a `<script>` tag.
+
+Only starts prefetching after onload to allow the browser to manage resources
+
+Detects 2G internet and `navigator.connection.saveData` mode to disable prefetch on
+slower network connections
+
+---
+
+### Dynamic Pages
+
+---
+
+A dynamic page is a page that has no fixed content, but instead display some data based on some parameters.
+
+---
+
+<CodeSurferLayout>
+
+```js
+import Link from 'next/link'
+
+const Post = props => (
+  <li>
+    <Link href={`/post?title=${props.title}`}>
+      <a>{props.title}</a>
+    </Link>
+  </li>
+)
+
+export default () => (
+  <div>
+    <h2>My blog</h2>
+    <ul>
+      <li>
+        <Post title="Yet another post" />
+        <Post title="Second post" />
+        <Post title="Hello, world!" />
+      </li>
+    </ul>
+  </div>
+)
+```
+
+</CodeSurferLayout>
+
+---
+
+<img src="./images/dynamic_blog.png" width="1200"/>
+
+---
+
+<CodeSurferLayout>
+
+```js
+// In post.js
+export default props => <h1>{props.url.query.title}</h1>
+```
+
+</CodeSurferLayout>
+
+---
+
+<img src="./images/dynamic_blog_post.png" width="1000"/>
+
+---
+
+### Static Exports
+
+---
+
+A static website is a one which contains pages with fixed content
+
+No processing is done to *generate* content
+
+Stored in the form of HTML, CSS and JS files on the server
+
+Can be deployed on one of the super fast static site hosts like **netlify**
+
+---
+
+<CodeSurferLayout>
+
+```js
+"scripts": {
+  "dev":   "next",
+  "build": "next build && next export",
+  "start": "next start"
+}
+```
+
+```js
+// Map your routes preactively
+// next.config.js
+module.exports = {
+  exportPathMap: async function(
+    defaultPathMap,
+    { dev, dir, outDir, distDir, buildId }
+  ) {
+    return {
+      '/':                   { page: '/' },
+      '/about':              { page: '/about' },
+      '/p/yet-another-post': { page: '/post', query: { title: 'yet-another-post' } },
+      '/p/second-post':      { page: '/post', query: { title: 'second-post' } },
+      '/p/hello-word':       { page: '/post', query: { title: 'hello-word' } },
+    }
+  },
+}
+```
+
+</CodeSurferLayout>
+
+---
+
+Each endpoint can act as it own instance using multi zones lambda functions
+
+---
+
+### Resources
+
+---
+
+1. https://nextjs.org/learn/basics/getting-started
+2. https://github.com/zeit/next.js
+
+---
+
+# Thank You
 
 ---
