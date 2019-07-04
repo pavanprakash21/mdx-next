@@ -33,14 +33,49 @@ Next
 
 Next's Features
 
+<Notes>
+  1. What is react? - definition, state, props
+  1. What is next?
+</Notes>
+
+---
+
+## What is React?
+
+React is a Javascript library by Facebook
+
+Released around 6 years back
+
+React works as the V in MVC
+
+---
+
+<CodeSurferLayout>
+
+```js
+// This is a regular HTML anchor tag
+// a -> tag
+// href -> attribute
+<a href="https://www.brillio.com">This is a link</a>
+```
+
+```js
+// This would be an example of a React Component
+// Link -> component
+// to -> prop
+<Link to="https://www.brillio.com">This is a link</Link>
+```
+
+</CodeSurferLayout>
+
 ---
 
 ## Why React?
 
 1. Reusable Components
 2. Cleaner Abstraction
-3. Virtual DOM
-4. Flux and Redux (hooks and effects)
+3. Virtual DOM - take it out
+4. State Management - how do you manage the data?
 5. No particular conventions -> Dynamic Ecosystem
 
 <Notes>
@@ -56,8 +91,8 @@ Next's Features
 ### Major Options
 
 1. Write everything from scratch
-2. Create-React-App
-3. Next.js
+2. Create-React-App - only client side scripting
+3. Next.js - gives the ability to do ssr
 
 <Notes>
   1. Just drop react and react-dom to your project. Setup everything including babel, webpack, styling, state management etc <br/>
@@ -116,9 +151,7 @@ Add the scripts to your package.json
 
 ```js
 "scripts": {
-  "dev":   "next",
-  "build": "next build",
-  "start": "next start"
+  "dev":   "next"
 }
 ```
 
